@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Register - StoreEverything</title>
+</head>
+
+<body>
+    <h2>Rejestracja</h2>
+    <form th:action="@{/register}" th:object="${user}" method="post">
+        <label>Login:</label>
+        <input type="text" th:field="*{username}" th:classappend="${#fields.hasErrors('username')} ? 'input-error'" />
+        <span class="error-message" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Błąd loginu</span>
+
+        <label>Hasło:</label>
+        <input type="password" th:field="*{password}" th:classappend="${#fields.hasErrors('password')} ? 'input-error'" />
+        <span class="error-message" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Błąd hasła</span>
+
+        <label>Wiek:</label>
+        <input type="number" th:field="*{age}" th:classappend="${#fields.hasErrors('age')} ? 'input-error'" />
+        <span class="error-message" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Błąd wieku</span>
+
+        <button type="submit">Zarejestruj się</button>
+    </form>
+
+    <p style="margin-top: 15px; font-size: 14px;">
+        Masz już konto? <a th:href="@{/login}">Zaloguj się</a>
+    </p>
+
+</body>
+</html>

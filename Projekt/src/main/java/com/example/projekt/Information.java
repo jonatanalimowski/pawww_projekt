@@ -7,6 +7,7 @@ import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
 
+//Klasa trzymajaca notatke
 @NoArgsConstructor
 @Setter
 @Getter

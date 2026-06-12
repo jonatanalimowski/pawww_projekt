@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - StoreEverything</title>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Logowanie</h2>
+
+    <div th:if="${param.error}" class="alert alert-danger">
+        Błędny login lub hasło.
+    </div>
+    <div th:if="${param.logout}" class="alert alert-success">
+        Wylogowano pomyślnie.
+    </div>
+    <div th:if="${param.registered}" class="alert alert-success">
+        Rejestracja udana! Możesz się zalogować.
+    </div>
+
+    <form th:action="@{/login}" method="post">
+        <label>Login:</label>
+        <input type="text" name="username" required />
+
+        <label>Hasło:</label>
+        <input type="password" name="password" required />
+
+        <button type="submit">Zaloguj się</button>
+    </form>
+
+    <p style="margin-top: 15px; font-size: 14px;">
+        Nie masz konta? <a th:href="@{/register}">Zarejestruj się</a>
+    </p>
+</div>
+
+</body>
+</html>
