@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Udostępnij</title></head>
+<body>
+<h1>Link do udostępnienia</h1>
+<p>Notatka: <strong th:text="${information.title}"></strong></p>
+
+<div>
+    <input type="text" th:value="${shareLink}" readonly id="linkInput"/>
+    <button onclick="navigator.clipboard.writeText(document.getElementById('linkInput').value)">
+        Kopiuj link
+    </button>
+</div>
+
+<a href="/information">Wróć</a>
+</body>
+</html>

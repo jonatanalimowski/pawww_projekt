@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Edytuj informację</title></head>
+<body>
+
+<h1>Edytuj informację</h1>
+
+<form th:action="@{/information/edit/{id}(id=${information.id})}" method="post">
+    <div>
+        <label>Tytuł:</label>
+        <input type="text" name="title" th:value="${information.title}" required/>
+    </div>
+    <div>
+        <label>Treść:</label>
+        <textarea name="content" th:text="${information.content}" required></textarea>
+    </div>
+    <button type="submit">Zapisz zmiany</button>
+</form>
+
+<a href="/information">Wróć</a>
+</body>
+</html>

@@ -1,9 +1,6 @@
-package com.example.projekt;
+package com.example.projekt.model;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 // Klasa trzymajaca kategorie notatki, pozniej bedzie weryfikacja za pomoca RESTa
 @Data

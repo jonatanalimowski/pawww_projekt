@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Panel admina</title>
+</head>
+<body>
+<h1>Użytkownicy</h1>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nazwa użytkownika</th>
+        <th>Wiek</th>
+        <th>Rola</th>
+        <th>Zmień rolę</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.id}"></td>
+        <td th:text="${user.username}"></td>
+        <td th:text="${user.age}"></td>
+        <td th:text="${user.role}"></td>
+        <td>
+            <form th:action="@{/admin/users/{id}/role(id=${user.id})}" method="post">
+                <select name="role">
+                    <option th:each="role : ${roles}"
+                            th:value="${role}"
+                            th:text="${role}"
+                            th:selected="${role == user.role}">
+                    </option>
+                </select>
+                <button type="submit">Zapisz</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<a href="/home">Wróć</a>
+</body>
+</html>

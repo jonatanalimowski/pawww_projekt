@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Moje informacje</title></head>
+<body>
+
+<h1>Moje informacje</h1>
+
+<h2>Sortowanie</h2>
+<div>
+    <a th:href="@{/information(sortBy='title', sortDir=${sortBy == 'title' and sortDir == 'asc' ? 'desc' : 'asc'})}">
+        Tytuł
+        <span th:if="${sortBy == 'title'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
+    </a>
+
+    <a th:href="@{/information(sortBy='addedDate', sortDir=${sortBy == 'addedDate' and sortDir == 'asc' ? 'desc' : 'asc'})}">
+        Data
+        <span th:if="${sortBy == 'addedDate'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
+    </a>
+</div>
+
+<h2>Dodaj nową</h2>
+<form th:action="@{/information/create}" method="post">
+    <div>
+        <label>Tytuł:</label>
+        <input type="text" name="title" placeholder="Tytuł" required/>
+    </div>
+    <div>
+        <label>Treść:</label>
+        <textarea name="content" placeholder="Treść" required></textarea>
+    </div>
+    <button type="submit">Dodaj</button>
+</form>
+
+<h2>Lista informacji</h2>
+
+<div th:if="${#lists.isEmpty(information)}">
+    <p>Brak informacji.</p>
+</div>
+
+<table th:unless="${#lists.isEmpty(information)}" border="1">
+    <thead>
+    <tr>
+        <th>Tytuł</th>
+        <th>Treść</th>
+        <th>Data dodania</th>
+        <th>Akcje</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="info : ${information}">
+        <td th:text="${info.title}"></td>
+        <td th:text="${info.content}"></td>
+        <td th:text="${info.addedDate}"></td>
+        <td>
+            <a th:href="@{/information/edit/{id}(id=${info.id})}">
+                <button type="button">Edytuj</button>
+            </a>
+
+            <a th:href="@{/information/sharelink/{id}(id=${info.id})}">Udostępnij</a>
+
+
+
+            <form th:action="@{/information/delete/{id}(id=${info.id})}"
+                  method="post"
+                  style="display:inline;">
+                <button type="submit">Usuń</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<a href="/home">Wróć</a>
+</body>
+</html>

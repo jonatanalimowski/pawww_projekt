@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title th:text="${information.title}">Notatka</title></head>
+<body>
+<h1 th:text="${information.title}"></h1>
+<p th:text="${information.content}"></p>
+<p>Dodano: <span th:text="${information.addedDate}"></span></p>
+<p>Autor: <span th:text="${information.owner.username}"></span></p>
+</body>
+</html>

@@ -1,7 +1,9 @@
-package com.example.projekt;
+package com.example.projekt.controller;
 
+import com.example.projekt.model.Role;
+import com.example.projekt.model.User;
+import com.example.projekt.repository.UserRepository;
 import jakarta.validation.Valid;
-import org.apache.tomcat.util.net.openssl.ciphers.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -49,7 +51,7 @@ public class AuthenticationController {
         }
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole("ROLE_FULL_USER");
+        user.setRole(Role.ROLE_LIMITED);
 
         userRepository.save(user);
         return "redirect:/login?registered";
