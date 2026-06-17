@@ -1,5 +1,6 @@
 package com.example.projekt.service;
 
+import com.example.projekt.model.Category;
 import com.example.projekt.model.Information;
 import com.example.projekt.model.User;
 import com.example.projekt.repository.InformationRepository;
@@ -20,20 +21,29 @@ public class InformationService {
         this.informationRepository = informationRepository;
     }
 
-    public List<Information> getInformationsForUser(User user, String sortBy, String sortDir) {
-        Sort.Direction direction = sortDir.equalsIgnoreCase("desc")
+    public List<Information> getInformationsForUser(User user, String sortBy, String sortDir, Long categoryId, LocalDate date) {
+        Sort.Direction direction = sortDir != null && sortDir.equalsIgnoreCase("desc")
                 ? Sort.Direction.DESC
                 : Sort.Direction.ASC;
 
-        Sort sort = Sort.by(direction, sortBy);
+        Sort sort = Sort.by(direction, sortBy != null ? sortBy : "addedDate");
+
+        if (categoryId != null) {
+            return informationRepository.findByOwnerAndCategoryId(user, categoryId, sort);
+        }
+        if (date != null) {
+            return informationRepository.findByOwnerAndAddedDate(user, date, sort);
+        }
+
         return informationRepository.findByOwner(user, sort);
     }
 
-    public void createInformation(String title, String content, User user) {
+    public void createInformation(String title, String content, User user, Category category) {
         Information information = new Information();
         information.setTitle(title);
         information.setContent(content);
         information.setOwner(user);
+        information.setCategory(category);
         information.setShareToken(UUID.randomUUID().toString());
         informationRepository.save(information);
     }
@@ -47,10 +57,11 @@ public class InformationService {
         return information;
     }
 
-    public void updateInformation(Long id, String title, String content, User user) {
+    public void updateInformation(Long id, String title, String content, User user, Category category) {
         Information information = getInformationById(id, user);
         information.setTitle(title);
         information.setContent(content);
+        information.setCategory(category);
         informationRepository.save(information);
     }
 

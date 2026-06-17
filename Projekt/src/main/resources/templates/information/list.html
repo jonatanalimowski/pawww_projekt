@@ -5,20 +5,45 @@
 
 <h1>Moje informacje</h1>
 
-<h2>Sortowanie</h2>
+<h2>Zarządzaj kategoriami</h2>
+<form th:action="@{/categories/create}" method="post">
+    <input type="text" name="name" placeholder="Nowa kategoria" required/>
+    <button type="submit">Dodaj kategorię</button>
+</form>
+
+<h2>Filtrowanie i Sortowanie</h2>
+<form th:action="@{/information}" method="get">
+    <div>
+        <label>Kategoria:</label>
+        <select name="categoryId">
+            <option value="">Wszystkie</option>
+            <option th:each="cat : ${categories}"
+                    th:value="${cat.id}"
+                    th:text="${cat.name}"
+                    th:selected="${cat.id == selectedCategoryId}"></option>
+        </select>
+
+        <label>Data:</label>
+        <input type="date" name="date" th:value="${selectedDate}"/>
+
+        <button type="submit">Filtruj</button>
+        <a th:href="@{/information}">Wyczyść filtry</a>
+    </div>
+</form>
+
 <div>
-    <a th:href="@{/information(sortBy='title', sortDir=${sortBy == 'title' and sortDir == 'asc' ? 'desc' : 'asc'})}">
-        Tytuł
+    <a th:href="@{/information(sortBy='title', sortDir=${sortBy == 'title' and sortDir == 'asc' ? 'desc' : 'asc'}, categoryId=${selectedCategoryId}, date=${selectedDate})}">
+        Tytuł (Alfabetycznie)
         <span th:if="${sortBy == 'title'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
     </a>
 
-    <a th:href="@{/information(sortBy='addedDate', sortDir=${sortBy == 'addedDate' and sortDir == 'asc' ? 'desc' : 'asc'})}">
+    <a th:href="@{/information(sortBy='addedDate', sortDir=${sortBy == 'addedDate' and sortDir == 'asc' ? 'desc' : 'asc'}, categoryId=${selectedCategoryId}, date=${selectedDate})}">
         Data
         <span th:if="${sortBy == 'addedDate'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
     </a>
 </div>
 
-<h2>Dodaj nową</h2>
+<h2>Dodaj nową notatkę</h2>
 <form th:action="@{/information/create}" method="post">
     <div>
         <label>Tytuł:</label>
@@ -27,6 +52,15 @@
     <div>
         <label>Treść:</label>
         <textarea name="content" placeholder="Treść" required></textarea>
+    </div>
+    <div>
+        <label>Kategoria:</label>
+        <select name="categoryId">
+            <option value="">Brak kategorii</option>
+            <option th:each="cat : ${categories}"
+                    th:value="${cat.id}"
+                    th:text="${cat.name}"></option>
+        </select>
     </div>
     <button type="submit">Dodaj</button>
 </form>
@@ -42,6 +76,7 @@
     <tr>
         <th>Tytuł</th>
         <th>Treść</th>
+        <th>Kategoria</th>
         <th>Data dodania</th>
         <th>Akcje</th>
     </tr>
@@ -50,6 +85,7 @@
     <tr th:each="info : ${information}">
         <td th:text="${info.title}"></td>
         <td th:text="${info.content}"></td>
+        <td th:text="${info.category != null ? info.category.name : '-'}"></td>
         <td th:text="${info.addedDate}"></td>
         <td>
             <a th:href="@{/information/edit/{id}(id=${info.id})}">
