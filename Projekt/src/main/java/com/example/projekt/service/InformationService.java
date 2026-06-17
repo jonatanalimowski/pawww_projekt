@@ -3,22 +3,55 @@ package com.example.projekt.service;
 import com.example.projekt.model.Category;
 import com.example.projekt.model.Information;
 import com.example.projekt.model.User;
+import com.example.projekt.model.SharedInformation;
 import com.example.projekt.repository.InformationRepository;
+import com.example.projekt.repository.SharedInformationRepository;
+import com.example.projekt.repository.UserRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 @Service
 public class InformationService {
 
     private final InformationRepository informationRepository;
+    private final SharedInformationRepository sharedInformationRepository;
+    private final UserRepository userRepository;
 
-    public InformationService(InformationRepository informationRepository) {
+    public InformationService(InformationRepository informationRepository, 
+                              SharedInformationRepository sharedInformationRepository,
+                              UserRepository userRepository) {
         this.informationRepository = informationRepository;
+        this.sharedInformationRepository = sharedInformationRepository;
+        this.userRepository = userRepository;
+    }
+
+    public List<Information> getSharedWithUser(User user) {
+        return sharedInformationRepository.findByRecipient(user).stream()
+                .map(SharedInformation::getInformation)
+                .collect(Collectors.toList());
+    }
+
+    public void shareWithUser(Long informationId, String username, User owner) {
+        Information info = getInformationById(informationId, owner);
+        User recipient = userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("Użytkownik nie istnieje"));
+        
+        if (info.getOwner().getId().equals(recipient.getId())) {
+            throw new RuntimeException("Nie możesz udostępnić notatki samemu sobie");
+        }
+
+        if (!sharedInformationRepository.existsByInformationIdAndRecipientId(informationId, recipient.getId())) {
+            SharedInformation shared = new SharedInformation();
+            shared.setInformation(info);
+            shared.setRecipient(recipient);
+            sharedInformationRepository.save(shared);
+        }
     }
 
     public List<Information> getInformationsForUser(User user, String sortBy, String sortDir, Long categoryId, LocalDate date) {

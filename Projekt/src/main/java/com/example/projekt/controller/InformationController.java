@@ -29,7 +29,7 @@ public class InformationController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('FULL')")
+    @PreAuthorize("hasAnyRole('FULL', 'LIMITED')")
     public String listInformation(Model model,
                                   @AuthenticationPrincipal User user,
                                   @RequestParam(required = false) String sortBy,
@@ -53,6 +53,7 @@ public class InformationController {
         session.setAttribute("sortDir", sortDir);
 
         model.addAttribute("information", informationService.getInformationsForUser(user, sortBy, sortDir, categoryId, date));
+        model.addAttribute("sharedWithMe", informationService.getSharedWithUser(user));
         model.addAttribute("categories", categoryService.getCategoriesForUser(user));
         model.addAttribute("newInformation", new Information());
         model.addAttribute("sortBy", sortBy);
@@ -61,6 +62,15 @@ public class InformationController {
         model.addAttribute("selectedDate", date);
 
         return "information/list";
+    }
+
+    @PostMapping("/share-user")
+    @PreAuthorize("hasRole('FULL')")
+    public String shareWithUser(@RequestParam Long informationId,
+                                @RequestParam String username,
+                                @AuthenticationPrincipal User user) {
+        informationService.shareWithUser(informationId, username, user);
+        return "redirect:/information";
     }
 
     @PostMapping("/create")
