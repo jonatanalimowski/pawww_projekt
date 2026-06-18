@@ -11,18 +11,17 @@
 </head>
 <body>
 <main class="main-content">
-    <div class="paper">
-<h1>Link do udostępnienia</h1>
-<p>Notatka: <strong th:text="${information.title}"></strong></p>
+    <div class="paper form-container">
+        <h1>Udostępnij notatkę</h1>
+        <p>Notatka: <strong th:text="${information.title}"></strong></p>
 
-<div>
-    <input type="text" th:value="${shareLink}" readonly id="linkInput"/>
-    <button onclick="navigator.clipboard.writeText(document.getElementById('linkInput').value)">
-        Kopiuj link
-    </button>
-</div>
-
-<a href="/information">Wróć</a>
+        <div>
+            <input type="text" th:value="${shareLink}" readonly id="linkInput" style="margin-bottom: 0.5rem;"/>
+            <button onclick="navigator.clipboard.writeText(document.getElementById('linkInput').value)" class="btn-submit">
+                Kopiuj link
+            </button>
+        </div>
+        <a th:href="@{/information}" class="btn-register">Wróć</a>
     </div>
 </main>
 </body>

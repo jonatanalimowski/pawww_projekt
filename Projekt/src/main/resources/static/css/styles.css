@@ -33,7 +33,7 @@ h3 { font-size: 1.1rem; font-weight: 400; }
 .brand-logo { font-family: var(--font-logo); color: var(--color-coral); text-decoration: none; font-size: clamp(1.8rem, 7vw, 3.5rem); }
 
 .navbar {
-    max-font-size: 2.5rem;
+    font-size: 2.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -56,7 +56,13 @@ h3 { font-size: 1.1rem; font-weight: 400; }
 }
 
 .welcome-card { padding: 3.5rem 4rem; max-width: 600px; }
-.form-container { padding: 3rem; width: 100%; max-width: 500px; }
+.form-container {
+    padding: 3rem;
+    width: 100%;
+    /*max-width: 500px;*/
+    max-width: 800px;}
+
+/*style="padding: 0.4rem 1rem; background-color: var(--color-coral); border-color: var(--color-coral);"*/
 
 .form-footer { margin-top: 1.5rem; font-size: 0.95rem; color: #7f8c8d;}
 .form-footer a {
@@ -89,6 +95,17 @@ table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; color: var(--c
 th { background: rgba(var(--color-teal-rgb), 0.1); color: var(--color-teal); padding: 1rem; border-bottom: 2px solid var(--color-teal); }
 td { padding: 1rem; border-bottom: 1px solid #eee; text-align: center; }
 tr:hover { background: rgba(var(--color-light-rgb), 0.8); }
+
+textarea {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    margin-bottom: 1.5rem;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    resize: vertical;
+}
 
 .alert { padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; text-align: center; font-weight: 600; }
 .alert-danger { background: rgba(var(--color-coral-rgb), 0.15); color: #d9383d; border: 1px solid var(--color-coral); }
