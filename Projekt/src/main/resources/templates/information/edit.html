@@ -6,41 +6,57 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap" rel="stylesheet">
-    <title>Information, Edit - StoreEverything</title>
-    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+
+    <title>Edycja notatki - StoreEverything</title>
+
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
 </head>
 <body>
+
 <div th:replace="~{elements/navbar :: navbar}"></div>
+
 <main class="main-content">
     <div class="paper form-container">
-        <h1>Edytuj notatkę</h1>
-        <form th:action="@{/information/edit/{id}(id=${information.id})}" method="post">
-            <label>Tytuł:</label>
-            <input type="text" name="title" th:value="${information.title}" required/>
-            <label>Treść:</label>
-            <textarea name="content" th:text="${information.content}" required style="min-height: 100px;"></textarea>
-            <button type="submit" class="btn-submit">Zapisz zmiany</button>
-        </form>
-        <a th:href="@{/information}" class="btn-secondary" style="margin-top: 10px; display: block;">Wróć</a>
-    </div>
-    <div>
-        <label>Treść:</label>
-        <textarea name="content" th:text="${information.content}" required></textarea>
-    </div>
-    <div>
-        <label>Kategoria:</label>
-        <select name="categoryId">
-            <option value="">Brak kategorii</option>
-            <option th:each="cat : ${categories}"
-                    th:value="${cat.id}"
-                    th:text="${cat.name}"
-                    th:selected="${information.category != null and information.category.id == cat.id}"></option>
-        </select>
-    </div>
-    <button type="submit" class="btn-primary">Zapisz zmiany</button>
-</form>
 
-<a href="/information", class="btn-secondary">Wróć</a>
+        <h1>Edytuj notatkę</h1>
+
+        <form th:action="@{/information/edit/{id}(id=${information.id})}" method="post">
+
+            <label for="title">Tytuł</label>
+            <input id="title"
+                   type="text"
+                   name="title"
+                   th:value="${information.title}"
+                   required>
+
+            <label for="content">Treść</label>
+            <textarea id="content"
+                      name="content"
+                      required
+                      th:text="${information.content}">
+            </textarea>
+
+            <label for="category">Kategoria</label>
+            <select id="category" name="categoryId">
+                <option value="">Brak kategorii</option>
+                <option th:each="cat : ${categories}"
+                        th:value="${cat.id}"
+                        th:text="${cat.name}"
+                        th:selected="${information.category != null && information.category.id == cat.id}">
+                </option>
+            </select>
+
+            <div class="actions">
+                <button type="submit" class="btn-primary">
+                    Zapisz zmiany
+                </button>
+
+                <a th:href="@{/information}" class="btn-secondary">
+                    Wróć
+                </a>
+            </div>
+        </form>
+    </div>
 </main>
 </body>
 </html>
