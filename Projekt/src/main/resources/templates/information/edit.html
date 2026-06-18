@@ -22,6 +22,23 @@
         </form>
         <a th:href="@{/information}" class="btn-register" style="margin-top: 10px; display: block;">Wróć</a>
     </div>
-</main>
+    <div>
+        <label>Treść:</label>
+        <textarea name="content" th:text="${information.content}" required></textarea>
+    </div>
+    <div>
+        <label>Kategoria:</label>
+        <select name="categoryId">
+            <option value="">Brak kategorii</option>
+            <option th:each="cat : ${categories}"
+                    th:value="${cat.id}"
+                    th:text="${cat.name}"
+                    th:selected="${information.category != null and information.category.id == cat.id}"></option>
+        </select>
+    </div>
+    <button type="submit">Zapisz zmiany</button>
+</form>
+
+<a href="/information">Wróć</a>
 </body>
 </html>

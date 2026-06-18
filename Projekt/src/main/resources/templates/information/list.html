@@ -10,51 +10,140 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
 </head>
 <body>
-    <main class="main-content">
-            <div class="paper form-container">
-                <h2>Dodaj nową</h2>
-                <form th:action="@{/information/create}" method="post">
-                    <div>
-                        <label>Tytuł:</label>
-                        <input type="text" name="title" placeholder="Tytuł" required/>
-                    </div>
-                    <div>
-                        <label>Treść:</label>
-                        <textarea name="content" placeholder="Treść" required></textarea>
-                    </div>
-                    <button type="submit" class="btn-submit">Dodaj</button>
+<main class="main-content">
+  <div class="paper form-container">
+
+<h1>Moje informacje</h1>
+
+<div th:if="${#authorization.expression('hasRole(''FULL'')')}">
+    <h2>Zarządzaj kategoriami</h2>
+    <form th:action="@{/categories/create}" method="post">
+        <input type="text" name="name" placeholder="Nowa kategoria" required/>
+        <button type="submit">Dodaj kategorię</button>
+    </form>
+
+    <h2>Filtrowanie i Sortowanie</h2>
+    <form th:action="@{/information}" method="get">
+        <div>
+            <label>Kategoria:</label>
+            <select name="categoryId">
+                <option value="">Wszystkie</option>
+                <option th:each="cat : ${categories}"
+                        th:value="${cat.id}"
+                        th:text="${cat.name}"
+                        th:selected="${cat.id == selectedCategoryId}"></option>
+            </select>
+
+            <label>Data:</label>
+            <input type="date" name="date" th:value="${selectedDate}"/>
+
+            <button type="submit">Filtruj</button>
+            <a th:href="@{/information}">Wyczyść filtry</a>
+        </div>
+    </form>
+
+    <div>
+        <a th:href="@{/information(sortBy='title', sortDir=${sortBy == 'title' and sortDir == 'asc' ? 'desc' : 'asc'}, categoryId=${selectedCategoryId}, date=${selectedDate})}">
+            Tytuł (Alfabetycznie)
+            <span th:if="${sortBy == 'title'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
+        </a>
+
+        <a th:href="@{/information(sortBy='addedDate', sortDir=${sortBy == 'addedDate' and sortDir == 'asc' ? 'desc' : 'asc'}, categoryId=${selectedCategoryId}, date=${selectedDate})}">
+            Data
+            <span th:if="${sortBy == 'addedDate'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
+        </a>
+    </div>
+
+    <h2>Dodaj nową notatkę</h2>
+    <form th:action="@{/information/create}" method="post">
+        <div>
+            <label>Tytuł:</label>
+            <input type="text" name="title" placeholder="Tytuł" required/>
+        </div>
+        <div>
+            <label>Treść:</label>
+            <textarea name="content" placeholder="Treść" required></textarea>
+        </div>
+        <div>
+            <label>Kategoria:</label>
+            <select name="categoryId">
+                <option value="">Brak kategorii</option>
+                <option th:each="cat : ${categories}"
+                        th:value="${cat.id}"
+                        th:text="${cat.name}"></option>
+            </select>
+        </div>
+        <button type="submit">Dodaj</button>
+    </form>
+
+    <h2>Lista moich notatek</h2>
+    <div th:if="${#lists.isEmpty(information)}">
+        <p>Brak własnych informacji.</p>
+    </div>
+    <table th:unless="${#lists.isEmpty(information)}" border="1">
+        <thead>
+        <tr>
+            <th>Tytuł</th>
+            <th>Treść</th>
+            <th>Kategoria</th>
+            <th>Data dodania</th>
+            <th>Akcje</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="info : ${information}">
+            <td th:text="${info.title}"></td>
+            <td th:text="${info.content}"></td>
+            <td th:text="${info.category != null ? info.category.name : '-'}"></td>
+            <td th:text="${info.addedDate}"></td>
+            <td>
+                <a th:href="@{/information/edit/{id}(id=${info.id})}">
+                    <button type="button">Edytuj</button>
+                </a>
+
+                <a th:href="@{/information/sharelink/{id}(id=${info.id})}">Link publiczny</a>
+
+                <form th:action="@{/information/share-user}" method="post" style="display:inline;">
+                    <input type="hidden" name="informationId" th:value="${info.id}"/>
+                    <input type="text" name="username" placeholder="Użytkownik" required/>
+                    <button type="submit">Udostępnij</button>
                 </form>
 
-                <div class="actions">
-                    <a class="btn-register" th:href="@{/information(sortBy='title', sortDir=${sortBy == 'title' and sortDir == 'asc' ? 'desc' : 'asc'})}">
-                        Tytuł <span th:if="${sortBy == 'title'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
-                    </a>
-                    <a class="btn-register" th:href="@{/information(sortBy='addedDate', sortDir=${sortBy == 'addedDate' and sortDir == 'asc' ? 'desc' : 'asc'})}">
-                        Data <span th:if="${sortBy == 'addedDate'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
-                    </a>
-                </div>
-                <h1>Moje notatki</h1>
-                <table>
-                    <thead>
-                    <tr><th>Tytuł</th><th>Data</th><th>Akcje</th></tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="info : ${information}">
-                        <td th:text="${info.title}"></td>
-                        <td th:text="${info.addedDate}"></td>
-                        <td class="actions">
-                            <a th:href="@{/information/edit/{id}(id=${info.id})}" class="btn-register">Edytuj</a>
-                            <a th:href="@{/information/sharelink/{id}(id=${info.id})}" class="btn-login">Udostępnij</a>
-                            <form th:action="@{/information/delete/{id}(id=${info.id})}" method="post">
-                                <button type="submit" class="btn-submit">Usuń</button>
-                            </form>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                <form th:action="@{/information/delete/{id}(id=${info.id})}"
+                      method="post"
+                      style="display:inline;">
+                    <button type="submit">Usuń</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
 
-                <a th:href="@{/home}" class="btn-register">Wróć</a>
+<h2>Notatki udostępnione Tobie</h2>
+<div th:if="${#lists.isEmpty(sharedWithMe)}">
+    <p>Nikt jeszcze nic Ci nie udostępnił.</p>
+</div>
+<table th:unless="${#lists.isEmpty(sharedWithMe)}" border="1">
+    <thead>
+    <tr>
+        <th>Tytuł</th>
+        <th>Treść</th>
+        <th>Właściciel</th>
+        <th>Data dodania</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="info : ${sharedWithMe}">
+        <td th:text="${info.title}"></td>
+        <td th:text="${info.content}"></td>
+        <td th:text="${info.owner.username}"></td>
+        <td th:text="${info.addedDate}"></td>
+    </tr>
+    </tbody>
+</table>
 
+<a href="/home">Wróć</a>
             </div>
     </main>
 </body>
