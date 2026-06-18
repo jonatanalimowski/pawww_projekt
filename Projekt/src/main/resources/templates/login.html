@@ -25,19 +25,20 @@
         Rejestracja udana! Możesz się zalogować.
         </div>
 
-        <form th:action="@{/login}" method="post">
+        <form th:action="@{/login}" method="post" class="form-container">
             <label>Login:</label>
             <input type="text" name="username" required />
 
             <label>Hasło:</label>
             <input type="password" name="password" required />
-
+            <div class="actions">
             <button type="submit" class="btn-primary" >Zaloguj się</button>
+            </div>
+            <p class="form-footer">
+                Nie masz konta? <a th:href="@{/register}">Zarejestruj się</a>
+            </p>
         </form>
 
-        <p class="form-footer">
-            Nie masz konta? <a th:href="@{/register}">Zarejestruj się</a>
-        </p>
     </div>
 </main>
 </body>

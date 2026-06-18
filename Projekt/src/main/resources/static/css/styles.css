@@ -25,9 +25,9 @@ body {
     line-height: 1.5;
 }
 
-h1, h2, h3 { color: var(--color-dark); font-weight: 700; margin-bottom: 1.5rem; }
+h1, h2, h3 { color: var(--color-dark); font-weight: 700; margin-bottom: 1.5rem; text-align: center;}
 h1 { font-size: 3rem; }
-h2 { font-size: 2rem; }
+h2 { font-size: 2rem;}
 h3 { font-size: 1.1rem; font-weight: 400; }
 
 .brand-logo { font-family: var(--font-logo); color: var(--color-coral); text-decoration: none; font-size: clamp(1.8rem, 7vw, 3.5rem); }
@@ -53,11 +53,13 @@ h3 { font-size: 1.1rem; font-weight: 400; }
     background-image: linear-gradient(to right, transparent 2.5rem, rgba(var(--color-coral-rgb), 0.25) 2.5rem, rgba(var(--color-coral-rgb), 0.25) 2.65rem, transparent 2.65rem);
     border-radius: 2px;
     box-shadow: 8px 12px 25px rgba(0,0,0,0.6);
+    padding: 3rem;
+    justify-content: center;
+    align-items: center;
 }
 
 .welcome-card { padding: 3.5rem 4rem; max-width: 600px; }
 .form-container {
-    padding: 3rem;
     width: 100%;
     max-width: 900px;}
 
@@ -72,9 +74,9 @@ h3 { font-size: 1.1rem; font-weight: 400; }
 
 /*przyciski*/
 .btn-primary, .btn-secondary {
-    padding: 0.8rem 2rem; border-radius: 8px; font-weight: 600; cursor: pointer;
+    padding: 14px 40px; border-radius: 8px; font-weight: 600; cursor: pointer;
     display: inline-block; transition: 0.3s; text-decoration: none;
-    text-align: center;
+    text-align: center; font-size: 1.1rem; font: inherit; cursor: pointer;
 }
 .btn-primary{
     background: var(--color-teal); color: var(--color-light); border: 2px solid var(--color-teal);
@@ -92,12 +94,12 @@ h3 { font-size: 1.1rem; font-weight: 400; }
 .actions { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
 
 .form-container input, .form-container select {
-    width: 100%; padding: 0.8rem; margin: 0.5rem 0 1.5rem; border: 2px solid #ccc; border-radius: 8px;
+    width: 100%; padding: 1.5rem; margin: 0.5rem 0 1.5rem; border: 2px solid #ccc; border-radius: 8px;
+    font-size: 1.1rem
 }
 .form-container label {
-    color: var(--color-dark); font-weight: 600; margin-bottom: 0.5rem;
-    font-size: 0.95rem; font-family: sans-serif;
-    padding-left: 0.5rem;
+    color: var(--color-dark); font-weight: 600; margin-bottom: 0.3rem;
+    font-size: 1.1rem; padding-left: 0.5rem;
 }
 
 table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; color: var(--color-dark); }
@@ -112,10 +114,21 @@ textarea {
     border: 2px solid #ccc;
     border-radius: 8px;
     font-size: 1rem;
-    font-family: inherit;
     resize: vertical;
 }
 
-.alert { padding: 1rem; border-radius: 8px; margin-bottom: 1.5rem; text-align: center; font-weight: 600; }
-.alert-danger { background: rgba(var(--color-coral-rgb), 0.15); color: #d9383d; border: 1px solid var(--color-coral); }
-.alert-success { background: rgba(var(--color-green-rgb), 0.15); color: #0d8a38; border: 1px solid var(--color-green); }
+.alert {
+    padding: 2rem 2.5rem;
+    width: 100%;
+    font-size: 1.25rem;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: 700;
+    resize: vertical;
+}
+.alert-danger {
+    background: rgba(var(--color-coral-rgb), 0.15); color: #d9383d;
+    border: 1px solid var(--color-coral); }
+.alert-success {
+    background: rgba(var(--color-green-rgb), 0.15); color: #0d8a38;
+    border: 1px solid var(--color-green); }
