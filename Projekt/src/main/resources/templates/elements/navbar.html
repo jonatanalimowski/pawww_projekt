@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap" rel="stylesheet">
+  <title>Navbar - StoreEverything</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+<nav class="navbar" th:fragment="navbar">
+  <a th:href="@{/home}" class="brand-logo">StoreEverything</a>
+
+  <div class="nav-links">
+    <a th:href="@{/admin/users}" sec:authorize="hasRole('ADMIN')">Panel admina</a>
+    <a th:href="@{/information}" sec:authorize="hasRole('FULL')">Moje notatki</a>
+<!--    <a th:href="@{/information/shared}">Udostępnione</a>-->
+    <a th:href="@{/logout}" class="logout" sec:authorize="isAuthenticated()">Wyloguj</a>
+  </div>
+</nav>
+</body>
+</html>

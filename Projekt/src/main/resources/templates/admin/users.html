@@ -10,6 +10,7 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
 </head>
 <body>
+<div th:replace="~{elements/navbar :: navbar}"></div>
 <main class="main-content">
     <div class="paper form-container">
         <h2>Zarządzanie użytkownikami</h2>
@@ -39,14 +40,14 @@
                                     th:selected="${role == user.role}">
                             </option>
                         </select>
-                        <button type="submit" class="btn-submit" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;">Zapisz</button>
+                        <button type="submit" class="btn-primary" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;">Zapisz</button>
                     </form>
                 </td>
             </tr>
             </tbody>
         </table>
 
-        <a th:href="@{/home}" class="btn-register" style="display: inline-block; margin-top: 1rem;">Wróć</a>
+        <a th:href="@{/home}" class="btn-secondary" style="display: inline-block; margin-top: 1rem;">Wróć</a>
     </div>
 </main>
 </body>

@@ -6,10 +6,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap" rel="stylesheet">
-    <title>Register - StoreEverything</title>
+    <title>Information, List - StoreEverything</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
 </head>
 <body>
+<div th:replace="~{elements/navbar :: navbar}"></div>
 <main class="main-content">
   <div class="paper form-container">
 
@@ -19,7 +20,7 @@
     <h2>Zarządzaj kategoriami</h2>
     <form th:action="@{/categories/create}" method="post">
         <input type="text" name="name" placeholder="Nowa kategoria" required/>
-        <button type="submit">Dodaj kategorię</button>
+        <button type="submit" class="btn-primary">Dodaj kategorię</button>
     </form>
 
     <h2>Filtrowanie i Sortowanie</h2>
@@ -37,7 +38,7 @@
             <label>Data:</label>
             <input type="date" name="date" th:value="${selectedDate}"/>
 
-            <button type="submit">Filtruj</button>
+            <button type="submit" class="btn-secondary">Filtruj</button>
             <a th:href="@{/information}">Wyczyść filtry</a>
         </div>
     </form>
@@ -73,14 +74,14 @@
                         th:text="${cat.name}"></option>
             </select>
         </div>
-        <button type="submit">Dodaj</button>
+        <button type="submit" class="btn-primary">Dodaj</button>
     </form>
 
     <h2>Lista moich notatek</h2>
     <div th:if="${#lists.isEmpty(information)}">
         <p>Brak własnych informacji.</p>
     </div>
-    <table th:unless="${#lists.isEmpty(information)}" border="1">
+    <table th:unless="${#lists.isEmpty(information)}">
         <thead>
         <tr>
             <th>Tytuł</th>
@@ -98,7 +99,7 @@
             <td th:text="${info.addedDate}"></td>
             <td>
                 <a th:href="@{/information/edit/{id}(id=${info.id})}">
-                    <button type="button">Edytuj</button>
+                    <button type="button" class="btn-secondary-">Edytuj</button>
                 </a>
 
                 <a th:href="@{/information/sharelink/{id}(id=${info.id})}">Link publiczny</a>
@@ -106,25 +107,24 @@
                 <form th:action="@{/information/share-user}" method="post" style="display:inline;">
                     <input type="hidden" name="informationId" th:value="${info.id}"/>
                     <input type="text" name="username" placeholder="Użytkownik" required/>
-                    <button type="submit">Udostępnij</button>
+                    <button type="submit" class="btn-secondary">Udostępnij</button>
                 </form>
 
                 <form th:action="@{/information/delete/{id}(id=${info.id})}"
-                      method="post"
-                      style="display:inline;">
-                    <button type="submit">Usuń</button>
+                      method="post">
+                    <button type="submit" class="btn-secondary">Usuń</button>
                 </form>
             </td>
         </tr>
         </tbody>
     </table>
-</div>
+    </div>
 
-<h2>Notatki udostępnione Tobie</h2>
-<div th:if="${#lists.isEmpty(sharedWithMe)}">
-    <p>Nikt jeszcze nic Ci nie udostępnił.</p>
-</div>
-<table th:unless="${#lists.isEmpty(sharedWithMe)}" border="1">
+    <h2>Notatki udostępnione Tobie</h2>
+    <div th:if="${#lists.isEmpty(sharedWithMe)}">
+        <p>Nikt jeszcze nic Ci nie udostępnił.</p>
+    </div>
+    <table th:unless="${#lists.isEmpty(sharedWithMe)}" border="1">
     <thead>
     <tr>
         <th>Tytuł</th>
@@ -141,9 +141,9 @@
         <td th:text="${info.addedDate}"></td>
     </tr>
     </tbody>
-</table>
+    </table>
 
-<a href="/home">Wróć</a>
+            <a href="/home">Wróć</a>
             </div>
     </main>
 </body>

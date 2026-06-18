@@ -10,9 +10,8 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
 </head>
 <body>
-<nav class="navbar">
-    <a th:href="@{/}" class="brand-logo">StoreEverything</a>
-</nav>
+
+<div th:replace="~{elements/navbar :: navbar}"></div>
 <main class="main-content">
     <form class="form-container paper" th:action="@{/register}" th:object="${user}" method="post">
         <h2>Rejestracja</h2>
@@ -29,7 +28,7 @@
         <input type="number" th:field="*{age}" th:classappend="${#fields.hasErrors('age')} ? 'input-error'" />
         <span class="error-message" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Błąd wieku</span>
 
-        <button type="submit" class="btn-submit">Zarejestruj się</button>
+        <button type="submit" class="btn-primary">Zarejestruj się</button>
 
         <p class="form-footer">
             Masz już konto? <a th:href="@{/login}">Zaloguj się</a>

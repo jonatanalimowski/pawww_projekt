@@ -10,6 +10,7 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
 </head>
 <body>
+<div th:replace="~{elements/navbar :: navbar}"></div>
 <main class="main-content">
     <div class="paper form-container">
         <h1>Edytuj notatkę</h1>
@@ -20,7 +21,7 @@
             <textarea name="content" th:text="${information.content}" required style="min-height: 100px;"></textarea>
             <button type="submit" class="btn-submit">Zapisz zmiany</button>
         </form>
-        <a th:href="@{/information}" class="btn-register" style="margin-top: 10px; display: block;">Wróć</a>
+        <a th:href="@{/information}" class="btn-secondary" style="margin-top: 10px; display: block;">Wróć</a>
     </div>
     <div>
         <label>Treść:</label>
@@ -36,9 +37,10 @@
                     th:selected="${information.category != null and information.category.id == cat.id}"></option>
         </select>
     </div>
-    <button type="submit">Zapisz zmiany</button>
+    <button type="submit" class="btn-primary">Zapisz zmiany</button>
 </form>
 
-<a href="/information">Wróć</a>
+<a href="/information", class="btn-secondary">Wróć</a>
+</main>
 </body>
 </html>

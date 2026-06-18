@@ -10,9 +10,7 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
 </head>
 <body>
-<nav class="navbar">
-    <a th:href="@{/}" class="brand-logo">StoreEverything</a>
-</nav>
+<div th:replace="~{elements/navbar :: navbar}"></div>
 <main class="main-content">
     <div class="form-container paper">
         <h2>Logowanie</h2>
@@ -34,7 +32,7 @@
             <label>Hasło:</label>
             <input type="password" name="password" required />
 
-            <button type="submit" class="btn-submit" >Zaloguj się</button>
+            <button type="submit" class="btn-primary" >Zaloguj się</button>
         </form>
 
         <p class="form-footer">

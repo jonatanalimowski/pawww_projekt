@@ -6,10 +6,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap" rel="stylesheet">
-    <title>Register - StoreEverything</title>
+    <title>Information, Shared view - StoreEverything</title>
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
 </head>
 <body>
+<div th:replace="~{elements/navbar :: navbar}"></div>
 <main class="main-content">
     <div class="form-container paper">
 <h1 th:text="${information.title}"></h1>

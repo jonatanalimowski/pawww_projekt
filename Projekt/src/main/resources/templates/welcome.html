@@ -12,18 +12,15 @@
 </head>
 <body>
 
-<nav class="navbar">
-    <a th:href="@{/}" class="brand-logo">StoreEverything</a>
-</nav>
-
+<div th:replace="~{elements/navbar :: navbar}"></div>
 <main class="main-content">
     <div class="welcome-card paper">
         <h1 class="brand-logo">StoreEverything</h1>
         <h3>Twoja aplikacja do bezpiecznego przechowywania oraz udostępniania notatek.</h3>
 
         <div class="actions">
-            <a th:href="@{/login}" class="btn-login">Zaloguj się</a>
-            <a th:href="@{/register}" class="btn-register">Stwórz konto</a>
+            <a th:href="@{/login}" class="btn-primary">Zaloguj się</a>
+            <a th:href="@{/register}" class="btn-secondary">Stwórz konto</a>
         </div>
     </div>
 </main>

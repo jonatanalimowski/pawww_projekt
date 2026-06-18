@@ -10,20 +10,7 @@
     <link rel="stylesheet" th:href="@{/css/styles.css}" />
 </head>
 <body>
-<nav class="navbar">
-    <a th:href="@{/home}" class="brand-logo">StoreEverything</a>
-    <div class="nav-links">
-        <div sec:authorize="hasRole('FULL')">
-        <a th:href="@{/information}">Moje Notatki</a>
-        </div>
-        <div sec:authorize="hasRole('ADMIN')">
-            <a th:href="@{/admin/users}">Panel admina</a>
-        </div>
-        <div>
-            <a th:href="@{/logout}">Wyloguj się</a>
-        </div>
-    </div>
-</nav>
+<div th:replace="~{elements/navbar :: navbar}"></div>
 
 <main class="main-content">
     <div class="paper form-container">
@@ -39,7 +26,7 @@
     </div>
 
     <form class="form-container" th:action="@{/logout}" method="post">
-        <button class="btn-submit" type="submit">Wyloguj się</button>
+        <button class="btn-secondary" type="submit">Wyloguj się</button>
     </form>
     </div>
 </main>
