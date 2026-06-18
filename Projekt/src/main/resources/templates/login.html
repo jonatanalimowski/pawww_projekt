@@ -2,37 +2,45 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap" rel="stylesheet">
     <title>Login - StoreEverything</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
 </head>
 <body>
+<nav class="navbar">
+    <a th:href="@{/}" class="brand-logo">StoreEverything</a>
+</nav>
+<main class="main-content">
+    <div class="form-container paper">
+        <h2>Logowanie</h2>
 
-<div class="form-container">
-    <h2>Logowanie</h2>
-
-    <div th:if="${param.error}" class="alert alert-danger">
+        <div th:if="${param.error}" class="alert alert-danger">
         Błędny login lub hasło.
-    </div>
-    <div th:if="${param.logout}" class="alert alert-success">
+        </div>
+        <div th:if="${param.logout}" class="alert alert-success">
         Wylogowano pomyślnie.
-    </div>
-    <div th:if="${param.registered}" class="alert alert-success">
+        </div>
+        <div th:if="${param.registered}" class="alert alert-success">
         Rejestracja udana! Możesz się zalogować.
+        </div>
+
+        <form th:action="@{/login}" method="post">
+            <label>Login:</label>
+            <input type="text" name="username" required />
+
+            <label>Hasło:</label>
+            <input type="password" name="password" required />
+
+            <button type="submit" class="btn-submit" >Zaloguj się</button>
+        </form>
+
+        <p class="form-footer">
+            Nie masz konta? <a th:href="@{/register}">Zarejestruj się</a>
+        </p>
     </div>
-
-    <form th:action="@{/login}" method="post">
-        <label>Login:</label>
-        <input type="text" name="username" required />
-
-        <label>Hasło:</label>
-        <input type="password" name="password" required />
-
-        <button type="submit">Zaloguj się</button>
-    </form>
-
-    <p style="margin-top: 15px; font-size: 14px;">
-        Nie masz konta? <a th:href="@{/register}">Zarejestruj się</a>
-    </p>
-</div>
-
+</main>
 </body>
 </html>

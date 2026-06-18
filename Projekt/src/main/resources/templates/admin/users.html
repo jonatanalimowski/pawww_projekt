@@ -1,43 +1,53 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="pl">
 <head>
-    <title>Panel admina</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap" rel="stylesheet">
+    <title>Users - StoreEverything</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
 </head>
 <body>
-<h1>Użytkownicy</h1>
+<main class="main-content">
+    <div class="paper form-container">
+        <h2>Zarządzanie użytkownikami</h2>
 
-<table>
-    <thead>
-    <tr>
-        <th>ID</th>
-        <th>Nazwa użytkownika</th>
-        <th>Wiek</th>
-        <th>Rola</th>
-        <th>Zmień rolę</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="user : ${users}">
-        <td th:text="${user.id}"></td>
-        <td th:text="${user.username}"></td>
-        <td th:text="${user.age}"></td>
-        <td th:text="${user.role}"></td>
-        <td>
-            <form th:action="@{/admin/users/{id}/role(id=${user.id})}" method="post">
-                <select name="role">
-                    <option th:each="role : ${roles}"
-                            th:value="${role}"
-                            th:text="${role}"
-                            th:selected="${role == user.role}">
-                    </option>
-                </select>
-                <button type="submit">Zapisz</button>
-            </form>
-        </td>
-    </tr>
-    </tbody>
-</table>
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nazwa</th>
+                <th>Wiek</th>
+                <th>Rola</th>
+                <th>Akcja</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="user : ${users}">
+                <td th:text="${user.id}"></td>
+                <td th:text="${user.username}"></td>
+                <td th:text="${user.age}"></td>
+                <td th:text="${user.role}"></td>
+                <td>
+                    <form th:action="@{/admin/users/{id}/role(id=${user.id})}" method="post" style="display: flex; gap: 5px;">
+                        <select name="role">
+                            <option th:each="role : ${roles}"
+                                    th:value="${role}"
+                                    th:text="${role}"
+                                    th:selected="${role == user.role}">
+                            </option>
+                        </select>
+                        <button type="submit" class="btn-submit" style="padding: 0.3rem 0.6rem; font-size: 0.8rem;">Zapisz</button>
+                    </form>
+                </td>
+            </tr>
+            </tbody>
+        </table>
 
-<a href="/home">Wróć</a>
+        <a th:href="@{/home}" class="btn-register" style="display: inline-block; margin-top: 1rem;">Wróć</a>
+    </div>
+</main>
 </body>
 </html>

@@ -1,14 +1,26 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head><title>Edytuj informację</title></head>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap" rel="stylesheet">
+    <title>Information, Edit - StoreEverything</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
 <body>
-
-<h1>Edytuj informację</h1>
-
-<form th:action="@{/information/edit/{id}(id=${information.id})}" method="post">
-    <div>
-        <label>Tytuł:</label>
-        <input type="text" name="title" th:value="${information.title}" required/>
+<main class="main-content">
+    <div class="paper form-container">
+        <h1>Edytuj notatkę</h1>
+        <form th:action="@{/information/edit/{id}(id=${information.id})}" method="post">
+            <label>Tytuł:</label>
+            <input type="text" name="title" th:value="${information.title}" required/>
+            <label>Treść:</label>
+            <textarea name="content" th:text="${information.content}" required style="min-height: 100px;"></textarea>
+            <button type="submit" class="btn-submit">Zapisz zmiany</button>
+        </form>
+        <a th:href="@{/information}" class="btn-register" style="margin-top: 10px; display: block;">Wróć</a>
     </div>
     <div>
         <label>Treść:</label>

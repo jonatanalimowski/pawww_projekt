@@ -1,10 +1,32 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml" , lang="pl">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap" rel="stylesheet">
     <title>Home - StoreEverything</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
 </head>
 <body>
+<nav class="navbar">
+    <a th:href="@{/home}" class="brand-logo">StoreEverything</a>
+    <div class="nav-links">
+        <div sec:authorize="hasRole('FULL')">
+        <a th:href="@{/information}">Moje Notatki</a>
+        </div>
+        <div sec:authorize="hasRole('ADMIN')">
+            <a th:href="@{/admin/users}">Panel admina</a>
+        </div>
+        <div>
+            <a th:href="@{/logout}">Wyloguj się</a>
+        </div>
+    </div>
+</nav>
+
+<main class="main-content">
+    <div class="paper form-container">
     <h1>Witaj użytkowniku</h1>
     <h3>Jesteś zalogowany jako: <span th:text="${username}"></span></h3>
 
@@ -16,8 +38,10 @@
         <a href="/information">Moje notatki</a>
     </div>
 
-    <form th:action="@{/logout}" method="post">
-        <button type="submit">Wyloguj się</button>
+    <form class="form-container" th:action="@{/logout}" method="post">
+        <button class="btn-submit" type="submit">Wyloguj się</button>
     </form>
+    </div>
+</main>
 </body>
 </html>
