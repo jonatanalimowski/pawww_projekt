@@ -1,14 +1,22 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
+<html xmlns:th="http://www.thymeleaf.org" lang="pl">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap" rel="stylesheet">
     <title>Register - StoreEverything</title>
+    <link rel="stylesheet" th:href="@{/css/styles.css}" />
 </head>
-
 <body>
-    <h2>Rejestracja</h2>
-    <form th:action="@{/register}" th:object="${user}" method="post">
+<nav class="navbar">
+    <a th:href="@{/}" class="brand-logo">StoreEverything</a>
+</nav>
+<main class="main-content">
+    <form class="form-container paper" th:action="@{/register}" th:object="${user}" method="post">
+        <h2>Rejestracja</h2>
+
         <label>Login:</label>
         <input type="text" th:field="*{username}" th:classappend="${#fields.hasErrors('username')} ? 'input-error'" />
         <span class="error-message" th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Błąd loginu</span>
@@ -21,12 +29,12 @@
         <input type="number" th:field="*{age}" th:classappend="${#fields.hasErrors('age')} ? 'input-error'" />
         <span class="error-message" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">Błąd wieku</span>
 
-        <button type="submit">Zarejestruj się</button>
+        <button type="submit" class="btn-submit">Zarejestruj się</button>
+
+        <p class="form-footer">
+            Masz już konto? <a th:href="@{/login}">Zaloguj się</a>
+        </p>
     </form>
-
-    <p style="margin-top: 15px; font-size: 14px;">
-        Masz już konto? <a th:href="@{/login}">Zaloguj się</a>
-    </p>
-
+</main>
 </body>
 </html>
