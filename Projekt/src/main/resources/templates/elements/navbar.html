@@ -11,10 +11,11 @@
 </head>
 <body>
 <nav class="navbar" th:fragment="navbar">
-  <a th:href="@{/home}" class="brand-logo">StoreEverything</a>
+  <a th:href="@{/}" class="brand-logo">StoreEverything</a>
 
   <div class="nav-links">
     <a th:href="@{/admin/users}" sec:authorize="hasRole('ADMIN')">Panel admina</a>
+    <a th:href="@{/home}" sec:authorize="isAuthenticated()">Mój Profil</a>
     <a th:href="@{/information}" sec:authorize="hasRole('FULL')">Moje notatki</a>
 <!--    <a th:href="@{/information/shared}">Udostępnione</a>-->
     <a th:href="@{/logout}" class="logout" sec:authorize="isAuthenticated()">Wyloguj</a>

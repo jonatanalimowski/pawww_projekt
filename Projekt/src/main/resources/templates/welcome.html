@@ -18,7 +18,7 @@
         <h1 class="brand-logo">StoreEverything</h1>
         <h3>Twoja aplikacja do bezpiecznego przechowywania oraz udostępniania notatek.</h3>
 
-        <div class="actions">
+        <div class="actions" sec:authorize="isAnonymous()">
             <a th:href="@{/login}" class="btn-primary">Zaloguj się</a>
             <a th:href="@{/register}" class="btn-secondary">Stwórz konto</a>
         </div>

@@ -13,10 +13,11 @@
 <div th:replace="~{elements/navbar :: navbar}"></div>
 <main class="main-content">
     <div class="form-container paper">
-<h1 th:text="${information.title}"></h1>
-<p th:text="${information.content}"></p>
-<p>Dodano: <span th:text="${information.addedDate}"></span></p>
-<p>Autor: <span th:text="${information.owner.username}"></span></p>
+        <h1 th:text="${information.title}"></h1>
+        <p class="notes-content" th:text="${information.content}"></p>
+
+        <p class="notes-footer">Dodano: <span th:text="${information.addedDate}"></span></p>
+        <p class="notes-footer">Autor: <span th:text="${information.owner.username}"></span></p>
     </div>
 </main>
 </body>
