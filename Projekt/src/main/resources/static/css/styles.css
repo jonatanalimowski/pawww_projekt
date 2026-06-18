@@ -25,7 +25,6 @@ body {
     line-height: 1.5;
 }
 
-
 h1, h2, h3 { color: var(--color-dark); font-weight: 700; margin-bottom: 1.5rem; }
 h1 { font-size: 3rem; }
 h2 { font-size: 2rem; }
@@ -59,6 +58,15 @@ h3 { font-size: 1.1rem; font-weight: 400; }
 .welcome-card { padding: 3.5rem 4rem; max-width: 600px; }
 .form-container { padding: 3rem; width: 100%; max-width: 500px; }
 
+.form-footer { margin-top: 1.5rem; font-size: 0.95rem; color: #7f8c8d;}
+.form-footer a {
+    color: var(--color-teal); text-decoration: none;
+    font-weight: 600; transition: color 0.3s ease;
+}
+.form-footer a:hover {
+    color: var(--color-green);
+}
+
 .actions { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
 .btn-submit, .btn-login, .btn-register {
     padding: 0.8rem 2rem; border-radius: 8px; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block; transition: 0.3s;
@@ -70,6 +78,11 @@ h3 { font-size: 1.1rem; font-weight: 400; }
 
 .form-container input, .form-container select {
     width: 100%; padding: 0.8rem; margin: 0.5rem 0 1.5rem; border: 2px solid #ccc; border-radius: 8px;
+}
+.form-container label {
+    color: var(--color-dark); font-weight: 600; margin-bottom: 0.5rem;
+    font-size: 0.95rem; font-family: sans-serif;
+    padding-left: 0.5rem;
 }
 
 table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; color: var(--color-dark); }
