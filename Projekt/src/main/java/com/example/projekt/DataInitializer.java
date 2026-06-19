@@ -25,8 +25,10 @@ public class DataInitializer {
             User admin = new User();
             admin.setUsername("admin");
             admin.setPassword(passwordEncoder.encode("admin123"));
-            admin.setAge(0);
+            admin.setAge(19);
             admin.setRole(Role.ROLE_ADMIN);
+            admin.setName("Admin");
+            admin.setSurname("Admin");
             userRepository.save(admin);
             System.out.println(">>> Admin created");
         } else {

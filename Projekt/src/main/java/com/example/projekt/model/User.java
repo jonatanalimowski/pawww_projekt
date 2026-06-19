@@ -1,9 +1,7 @@
 package com.example.projekt.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -31,7 +29,18 @@ public class User implements UserDetails {
     @Size(min = 5, message = "Hasło musi zawierać przynajmniej 5 znaki.")
     private String password;
 
+    @NotBlank(message = "Imie jest wymagane")
+    @Pattern(regexp = "^[A-Z].*", message = "Pole musi zaczynać się od wielkiej litery")
+    @Size(min = 3, max = 20, message = "Nazwa musi zawierać od 3 do 20 znaków.")
+    private String name;
+
+    @NotBlank(message = "Nazwisko jest wymagane")
+    @Pattern(regexp = "^[A-Z].*", message = "Pole musi zaczynać się od wielkiej litery")
+    @Size(min = 3, max = 50, message = "Nazwa musi zawierać od 3 do 50 znaków.")
+    private String surname;
+
     @NotNull(message = "Wiek jest wymagany")
+    @Min(value = 19, message = "Musisz miec 18 lat")
     private Integer age;
 
     @Enumerated(EnumType.STRING)
