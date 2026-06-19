@@ -29,9 +29,10 @@ public class SpringSecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/register", "/login", "/css/**", "/js/**", "/images/**").permitAll()
                         .requestMatchers("/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/information").hasRole("LIMITED")
                         .requestMatchers("/information/**").hasRole("FULL")
                         .requestMatchers("/categories/**").hasRole("FULL")
-                        .requestMatchers("/information/share/**").permitAll()
+                        .requestMatchers("/information/shared/**").permitAll()
                         .requestMatchers("/full/**").hasAnyRole("FULL", "ADMIN")
                         .requestMatchers("/limited/**").hasAnyRole("LIMITED", "FULL", "ADMIN")
                         .anyRequest().authenticated()
