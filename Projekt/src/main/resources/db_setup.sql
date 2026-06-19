@@ -54,6 +54,8 @@ GRANT projekt_uzytkownik_limited TO user2;
 
 SET ROLE user2;
 SELECT * FROM information;
+select * from categories;
+DELETE FROM categories where id in (2, 3, 4, 5, 6, 7);
 SELECT * FROM shared_information s_i
 WHERE s_i.recipient_id = 3;
 SELECT * FROM uzytkownik;

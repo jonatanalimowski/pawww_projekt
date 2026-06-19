@@ -65,6 +65,7 @@ public class InformationController {
 
         return "information/list";
     }
+
     @GetMapping("/add")
     @PreAuthorize("hasAnyRole('FULL')")
     public String showAddPage(Model model, @AuthenticationPrincipal User user) {
@@ -83,6 +84,7 @@ public class InformationController {
         informationService.shareWithUser(informationId, username, user);
         return "redirect:/information";
     }
+
     @PostMapping("/create")
     @PreAuthorize("hasRole('FULL')")
     public String handleAddForm(

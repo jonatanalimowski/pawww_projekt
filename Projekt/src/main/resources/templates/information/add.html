@@ -39,7 +39,9 @@
   <form th:action="@{/categories/create}" method="post">
     <div class="category-container paper">
       <h2>Dodaj nową kategorię!</h2>
-
+      <div th:if="${param.error}" class="alert alert-danger">
+        Błąd kategorii
+      </div>
       <input type="text" name="name" placeholder="Nowa kategoria"/>
 
       <div class="actions">
@@ -50,46 +52,3 @@
 </main>
 </body>
 </html>
-
-<script>
-  document.addEventListener("DOMContentLoaded", function () {
-
-    const titleInput = document.querySelector("input[name='title']");
-    const contentInput = document.querySelector("textarea[name='content']");
-    const categorySelect = document.querySelector("select[name='categoryId']");
-    const categoryInput = document.querySelector("input[name='name']");
-
-    const savedTitle = localStorage.getItem("draftTitle");
-    const savedContent = localStorage.getItem("draftContent");
-    const savedCategory = localStorage.getItem("draftCategory");
-    const savedNewCategoryName = localStorage.getItem("draftNewCategoryName");
-
-    if (savedTitle) titleInput.value = savedTitle;
-    if (savedContent) contentInput.value = savedContent;
-    if (savedCategory) categorySelect.value = savedCategory;
-    if (savedNewCategoryName) categoryInput.value = savedNewCategoryName ;
-
-    titleInput.addEventListener("input", function () {
-      localStorage.setItem("draftTitle", this.value);
-    });
-
-    contentInput.addEventListener("input", function () {
-      localStorage.setItem("draftContent", this.value);
-    });
-
-    categorySelect.addEventListener("change", function () {
-      localStorage.setItem("draftCategory", this.value);
-    });
-
-    categoryInput.addEventListener("change", function () {
-      localStorage.setItem("draftNewCategoryName", this.value);
-    });
-
-    if (window.location.search.includes("success")) {
-      localStorage.removeItem("draftTitle");
-      localStorage.removeItem("draftContent");
-      localStorage.removeItem("draftCategory");
-      localStorage.removeItem("draftNewCategoryName");
-    }
-  });
-</script>

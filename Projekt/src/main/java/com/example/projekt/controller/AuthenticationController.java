@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-// Kontroler, zarzadza adresami pod ktorymi jest logowanie/rejestracja oraz logika i laczeniem ze spring security
 @Controller
 public class AuthenticationController {
     private final UserRepository userRepository;
@@ -47,7 +46,7 @@ public class AuthenticationController {
         }
 
         if (result.hasErrors()) {
-            return "register"; // w razie bledow walidacji wyswietlamy formularz ponownie
+            return "register";
         }
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
