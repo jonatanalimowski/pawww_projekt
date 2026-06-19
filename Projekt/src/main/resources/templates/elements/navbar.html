@@ -14,11 +14,10 @@
   <a th:href="@{/}" class="brand-logo">StoreEverything</a>
 
   <div class="nav-links">
+    <a th:href="@{/home}" sec:authorize="isAuthenticated()">Home</a>
     <a th:href="@{/admin/users}" sec:authorize="hasRole('ADMIN')">Panel admina</a>
-    <a th:href="@{/home}" sec:authorize="isAuthenticated()">Mój Profil</a>
     <a th:href="@{/information/add}" sec:authorize="hasRole('FULL')">Stwórz nową notatkę</a>
-    <a th:href="@{/information}" sec:authorize="hasRole('FULL')">Moje notatki</a>
-    <a th:href="@{/information/shared-view}">Udostępnione</a>
+    <a th:href="@{/information}" sec:authorize="hasAnyRole('FULL', 'LIMITED')">Moje notatki</a>
     <a th:href="@{/logout}" class="logout" sec:authorize="isAuthenticated()">Wyloguj</a>
   </div>
 </nav>

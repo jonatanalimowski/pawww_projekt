@@ -15,10 +15,10 @@
 <div th:replace="~{elements/navbar :: navbar}"></div>
 
 <main class="main-content list-layout">
-
     <div class="paper list-paper" th:if="${#authorization.expression('hasRole(''FULL'')')}">
+        <h1>Moje notatki</h1>
+        <div class="group-row">
         <h2>Filtrowanie i sortowanie</h2>
-
         <div class="actions" style="justify-content: flex-start; margin-bottom: 2rem;">
             <a class="btn-secondary"
                th:href="@{/information(sortBy='title', sortDir=${sortBy == 'title' and sortDir == 'asc' ? 'desc' : 'asc'}, categoryId=${selectedCategoryId}, date=${selectedDate})}">
@@ -29,7 +29,7 @@
                 Data <span th:if="${sortBy == 'addedDate'}" th:text="${sortDir == 'asc' ? '▲' : '▼'}"></span>
             </a>
         </div>
-
+        </div>
         <form th:action="@{/information}" method="get" class="filters">
             <div class="filter-item">
                 <label>Kategoria:</label>
@@ -49,10 +49,6 @@
                 <a th:href="@{/information}" class="btn-secondary">Wyczyść filtry</a>
             </div>
         </form>
-    </div>
-
-    <div class="paper list-paper" th:if="${#authorization.expression('hasRole(''FULL'')')}">
-        <h2>Moje notatki</h2>
 
         <div th:if="${#lists.isEmpty(information)}" class="notes-content">
             <p>Brak własnych informacji.</p>
