@@ -1,9 +1,14 @@
 package com.example.projekt.controller;
 
+import com.example.projekt.model.Category;
 import com.example.projekt.model.User;
 import com.example.projekt.service.CategoryService;
+import jakarta.validation.Valid;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,8 +24,17 @@ public class CategoryController {
     }
 
     @PostMapping("/create")
-    public String createCategory(@RequestParam String name, @AuthenticationPrincipal User user) {
-        categoryService.createCategory(name, user);
-        return "redirect:/information";
+    public String createCategory(@Valid @ModelAttribute("category") Category category,
+                                 BindingResult result,
+                                 @AuthenticationPrincipal User user,
+                                 Model model) {
+
+        if (result.hasErrors()) {
+            model.addAttribute("category", category);
+            return "redirect:/information/add";
+        }
+
+        categoryService.createCategory(category.getName(), user);
+        return "redirect:/information/add";
     }
 }

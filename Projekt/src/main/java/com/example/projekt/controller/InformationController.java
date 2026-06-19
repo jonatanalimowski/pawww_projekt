@@ -9,11 +9,13 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -75,7 +77,11 @@ public class InformationController {
     }
     @GetMapping("/add")
     @PreAuthorize("hasAnyRole('FULL')")
-    public String showAddPage() {
+    public String showAddPage(Model model, @AuthenticationPrincipal User user) {
+
+        model.addAttribute("category", new Category());
+        model.addAttribute("information", new Information());
+        model.addAttribute("categories", categoryService.getCategoriesForUser(user));
         return "information/add";
     }
 
@@ -87,16 +93,14 @@ public class InformationController {
         informationService.shareWithUser(informationId, username, user);
         return "redirect:/information";
     }
-
     @PostMapping("/create")
     @PreAuthorize("hasRole('FULL')")
-    public String handleAddForm(@RequestParam(required = false) String action,
-                                @RequestParam(required = false) String title,
-                                @RequestParam(required = false) String content,
-                                @RequestParam(required = false) Long categoryId,
-                                @RequestParam(required = false) String newCategoryName,
-                                @AuthenticationPrincipal User user,
-                                Model model) {
+    public String handleAddForm(
+            @Valid @ModelAttribute("information") Information information,
+            BindingResult result,
+            @RequestParam(required = false) Long categoryId,
+            @AuthenticationPrincipal User user,
+            Model model) {
 
         if ("addCategory".equals(action)) {
             if (newCategoryName != null && !newCategoryName.trim().isEmpty()) {
@@ -110,6 +114,7 @@ public class InformationController {
             model.addAttribute("draftTitle", title);
             model.addAttribute("draftContent", content);
             model.addAttribute("categories", categoryService.getCategoriesForUser(user));
+            model.addAttribute("information", information);
             return "information/add";
         }
 
@@ -118,9 +123,17 @@ public class InformationController {
             category = new Category();
             category.setId(categoryId);
         }
-        informationService.createInformation(title, content, user, category);
+
+        informationService.createInformation(
+                information.getTitle(),
+                information.getContent(),
+                user,
+                category
+        );
+
         return "redirect:/information";
     }
+
     @GetMapping("/edit/{id}")
     @PreAuthorize("hasRole('FULL')")
     public String editForm(@PathVariable Long id,

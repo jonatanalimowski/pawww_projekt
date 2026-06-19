@@ -14,40 +14,82 @@
 
 <div th:replace="~{elements/navbar :: navbar}"></div>
 
-<main class="main-content">
-  <form th:action="@{/information/create}" method="post" class="form-layout">
-
+<main class="main-content form-layout">
+  <form th:action="@{/information/create}" method="post" class="notes-add">
     <div class="form-container paper">
       <h2>Dodaj nową notatkę</h2>
-      <label>Tytuł:</label>
-      <input type="text" name="title" th:value="${draftTitle}" placeholder="Tytuł" />
+        <label>Tytuł:</label>
+        <input type="text" name="title" placeholder="Tytuł"/>
 
-      <label>Treść:</label>
-      <textarea name="content" th:text="${draftContent}" placeholder="Treść"></textarea>
+        <label>Treść:</label>
+        <textarea name="content" placeholder="Treść"></textarea>
 
-      <label>Kategoria:</label>
-      <select name="categoryId">
-        <option value="">Brak kategorii</option>
-        <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
-      </select>
+        <label>Kategoria:</label>
+        <select name="categoryId">
+          <option value="">Brak kategorii</option>
+          <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
+        </select>
 
-      <div class="actions">
-        <button type="submit" class="btn-primary">Dodaj notatkę</button>
-        <a th:href="@{/home}" class="btn-secondary">Anuluj</a>
-      </div>
+        <div class="actions">
+          <button type="submit" class="btn-primary">Dodaj</button>
+          <a th:href="@{/home}" class="btn-secondary">Anuluj</a>
+        </div>
     </div>
-
+    </form>
+  <form th:action="@{/categories/create}" method="post">
     <div class="category-container paper">
       <h2>Dodaj nową kategorię!</h2>
-      <p th:if="${categoryError}" th:text="${categoryError}" style="color: red; font-weight: bold;"></p>
-      <input type="text" name="newCategoryName" placeholder="Nowa kategoria" />
+
+      <input type="text" name="name" placeholder="Nowa kategoria"/>
 
       <div class="actions">
-        <button type="submit" name="action" value="addCategory" class="btn-primary">Dodaj kategorię</button>
+        <button type="submit" class="btn-primary">Dodaj kategorię</button>
       </div>
     </div>
-
   </form>
 </main>
 </body>
 </html>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+
+    const titleInput = document.querySelector("input[name='title']");
+    const contentInput = document.querySelector("textarea[name='content']");
+    const categorySelect = document.querySelector("select[name='categoryId']");
+    const categoryInput = document.querySelector("input[name='name']");
+
+    const savedTitle = localStorage.getItem("draftTitle");
+    const savedContent = localStorage.getItem("draftContent");
+    const savedCategory = localStorage.getItem("draftCategory");
+    const savedNewCategoryName = localStorage.getItem("draftNewCategoryName");
+
+    if (savedTitle) titleInput.value = savedTitle;
+    if (savedContent) contentInput.value = savedContent;
+    if (savedCategory) categorySelect.value = savedCategory;
+    if (savedNewCategoryName) categoryInput.value = savedNewCategoryName ;
+
+    titleInput.addEventListener("input", function () {
+      localStorage.setItem("draftTitle", this.value);
+    });
+
+    contentInput.addEventListener("input", function () {
+      localStorage.setItem("draftContent", this.value);
+    });
+
+    categorySelect.addEventListener("change", function () {
+      localStorage.setItem("draftCategory", this.value);
+    });
+
+    categoryInput.addEventListener("change", function () {
+      localStorage.setItem("draftNewCategoryName", this.value);
+    });
+
+    if (window.location.search.includes("success")) {
+      localStorage.removeItem("draftTitle");
+      localStorage.removeItem("draftContent");
+      localStorage.removeItem("draftCategory");
+      localStorage.removeItem("draftNewCategoryName");
+    }
+  });
+</script>
