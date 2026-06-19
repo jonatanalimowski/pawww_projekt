@@ -14,20 +14,14 @@
 
 <main class="main-content">
     <div class="paper form-container">
-    <h1>Witaj użytkowniku</h1>
-    <h3>Jesteś zalogowany jako: <span th:text="${username}"></span></h3>
+        <div class="homepage">
+            <h1>Witaj <span th:text="${username}"></span>!</h1>
 
-    <div sec:authorize="hasRole('ADMIN')">
-        <a href="/admin/users">Panel admina</a>
-    </div>
-
-    <div sec:authorize="hasRole('FULL')">
-        <a href="/information">Moje notatki</a>
-    </div>
-
-    <form class="form-container" th:action="@{/logout}" method="post">
-        <button class="btn-secondary" type="submit">Wyloguj się</button>
-    </form>
+            <div class="actions">
+                <a th:href="@{/information/add}" sec:authorize="hasRole('FULL')" class="btn-primary">Stwórz nowa notatke</a>
+                <a th:href="@{/information}" sec:authorize="hasRole('FULL')" class="btn-secondary">Przeglądaj notatki</a>
+            </div>
+        </div>
     </div>
 </main>
 </body>

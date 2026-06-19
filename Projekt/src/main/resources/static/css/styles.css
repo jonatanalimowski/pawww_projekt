@@ -33,6 +33,12 @@ h3 { font-size: 1.1rem; font-weight: 400; }
 p {color: var(--color-dark);}
 .brand-logo { font-family: var(--font-logo); color: var(--color-coral); text-decoration: none; font-size: clamp(1.8rem, 7vw, 3.5rem); }
 
+
+.homepage {
+    width: 800px;
+    height: 400px;
+}
+
 .navbar {
     font-size: 2.5rem;
     display: flex;
@@ -47,7 +53,15 @@ p {color: var(--color-dark);}
     font-weight: 600; transition: color 0.3s; font-size: 1.5rem;}
 .navbar .nav-links a:hover { color: var(--color-green); }
 
-.main-content { flex-grow: 1; display: flex; justify-content: center; align-items: center; padding: 2rem; }
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 3rem;
+    padding: 2rem;
+    flex-wrap: wrap;
+}
 
 .paper {
     background: var(--color-light);
@@ -58,6 +72,29 @@ p {color: var(--color-dark);}
     margin-bottom:2rem;
     justify-content: center;
     align-items: center;
+    display: flex;
+    flex-direction: column;
+}
+
+.paper input, .paper select, .paper textarea {
+    width: 100%;
+    padding: 1.5rem;
+    margin: 0.5rem 0 1.5rem;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-family: inherit;
+}
+
+.paper label {
+    color: var(--color-dark);
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    font-size: 1.1rem;
+    padding-left: 0.5rem;
+    display: block;
+    width: 100%;
+    text-align: left;
 }
 
 .filters{
@@ -70,8 +107,18 @@ p {color: var(--color-dark);}
 .welcome-card { padding: 3.5rem 4rem; max-width: 600px; }
 
 .form-container {
-    /*width: 100%;*/
-    max-width: 1100px;}
+    width: 100%;
+    height: 100%;
+    max-width: 900px;
+    max-height: 800px;
+}
+
+.category-add {
+    width: 100%;
+    max-width: 400px;
+    position: sticky;
+    top: 2rem;
+}
 
 .notes-content { font-size: 0.95rem; color: #7f8c8d; margin-bottom: 1.5rem;}
 
@@ -84,6 +131,15 @@ p {color: var(--color-dark);}
 }
 .form-footer a:hover {
     color: var(--color-green);
+}
+
+.form-layout {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 3rem;
+    flex-wrap: wrap;
+    width: 100%;
 }
 
 /*przyciski*/
@@ -107,7 +163,7 @@ p {color: var(--color-dark);}
 
 .actions { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
 
-.form-container input, .form-container select {
+.form-container input, .form-container select, textarea {
     width: 100%; padding: 1.5rem; margin: 0.5rem 0 1.5rem; border: 2px solid #ccc; border-radius: 8px;
     font-size: 1.1rem
 }
@@ -151,3 +207,67 @@ textarea {
 .alert-success {
     background: rgba(var(--color-green-rgb), 0.15); color: #0d8a38;
     border: 1px solid var(--color-green); }
+
+
+
+.list-layout {
+    flex-direction: column;
+    align-items: center;
+}
+.list-paper {
+    width: 100%;
+    max-width: 1200px;
+    margin-bottom: 2rem;
+}
+
+
+.filters {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    width: 100%;
+}
+.filter-item {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    min-width: 200px;
+}
+.filter-item label {
+    width: auto;
+}
+.filter-item input, .filter-item select {
+    margin: 0;
+    padding: 1rem;
+}
+.filter-actions {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+}
+
+
+.share-form {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    gap: 0.5rem;
+}
+.share-form input {
+    margin: 0 !important;
+    padding: 0.8rem !important;
+    font-size: 0.95rem !important;
+    flex-grow: 1;
+    width: auto;
+}
+.share-form button {
+    width: auto;
+    padding: 0 15px;
+    white-space: nowrap;
+}
+
+.group-row {
+    display: flex;
+    gap: 0.3rem;
+    width: 100%;
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap" rel="stylesheet">
+  <title>Information, Add - StoreEverything</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+
+<body>
+
+<div th:replace="~{elements/navbar :: navbar}"></div>
+
+<main class="main-content">
+  <form th:action="@{/information/create}" method="post" class="form-layout">
+    <div class="form-container paper">
+      <h2>Dodaj nową notatkę</h2>
+        <label>Tytuł:</label>
+        <input type="text" name="title" placeholder="Tytuł" required/>
+
+        <label>Treść:</label>
+        <textarea name="content" placeholder="Treść" required></textarea>
+
+        <label>Kategoria:</label>
+        <select name="categoryId">
+          <option value="">Brak kategorii</option>
+          <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
+        </select>
+
+        <div class="actions">
+          <button type="submit" class="btn-primary">Dodaj</button>
+          <a th:href="@{/home}" class="btn-secondary">Anuluj</a>
+        </div>
+    </div>
+  <div class="category-container paper">
+    <h2>Dodaj nową kategorię!</h2>
+      <input type="text" name="name" placeholder="Nowa kategoria" required/>
+      <div class="actions">
+        <button type="submit" class="btn-primary">Dodaj kategorię</button>
+      </div>
+    </div>
+  </form>
+</main>
+</body>
+</html>

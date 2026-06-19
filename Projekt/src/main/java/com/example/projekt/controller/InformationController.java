@@ -63,6 +63,11 @@ public class InformationController {
 
         return "information/list";
     }
+    @GetMapping("/add")
+    @PreAuthorize("hasAnyRole('FULL')")
+    public String showAddPage() {
+        return "information/add";
+    }
 
     @PostMapping("/share-user")
     @PreAuthorize("hasRole('FULL')")
@@ -75,21 +80,33 @@ public class InformationController {
 
     @PostMapping("/create")
     @PreAuthorize("hasRole('FULL')")
-    public String createInformation(@RequestParam String title,
-                                    @RequestParam String content,
-                                    @RequestParam(required = false) Long categoryId,
-                                    @AuthenticationPrincipal User user) {
+    public String handleAddForm(@RequestParam(required = false) String action,
+                                @RequestParam(required = false) String title,
+                                @RequestParam(required = false) String content,
+                                @RequestParam(required = false) Long categoryId,
+                                @RequestParam(required = false) String newCategoryName,
+                                @AuthenticationPrincipal User user,
+                                Model model) {
+
+        if ("addCategory".equals(action)) {
+            if (newCategoryName != null && !newCategoryName.trim().isEmpty()) {
+                categoryService.createCategory(newCategoryName, user);
+            }
+
+            model.addAttribute("draftTitle", title);
+            model.addAttribute("draftContent", content);
+            model.addAttribute("categories", categoryService.getCategoriesForUser(user));
+            return "information/add";
+        }
+
         Category category = null;
         if (categoryId != null) {
-            // Simple approach: we assume the user owns the category or we could verify it
-            // For now, let's just use it
             category = new Category();
             category.setId(categoryId);
         }
         informationService.createInformation(title, content, user, category);
         return "redirect:/information";
     }
-
     @GetMapping("/edit/{id}")
     @PreAuthorize("hasRole('FULL')")
     public String editForm(@PathVariable Long id,
