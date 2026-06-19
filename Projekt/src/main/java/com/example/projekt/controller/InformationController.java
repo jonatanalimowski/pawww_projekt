@@ -44,7 +44,6 @@ public class InformationController {
                                   @CookieValue(value = "sortDir", defaultValue = "desc") String cookieSortDir,
                                   HttpServletResponse response) {
 
-        // 1. Jeśli parametry w URL są puste, pobierz wartości z ciasteczek
         if (sortBy == null) {
             sortBy = cookieSortBy;
         }
@@ -52,10 +51,9 @@ public class InformationController {
             sortDir = cookieSortDir;
         }
 
-        // 2. Zapisz aktualne preferencje z powrotem do ciasteczek, aby przetrwały restart przeglądarki
         Cookie sortByCookie = new Cookie("sortBy", sortBy);
-        sortByCookie.setMaxAge(7 * 24 * 60 * 60); // Ciasteczko ważne przez 7 dni
-        sortByCookie.setPath("/information");      // Dostępne tylko dla tej ścieżki
+        sortByCookie.setMaxAge(7 * 24 * 60 * 60);
+        sortByCookie.setPath("/information");
         response.addCookie(sortByCookie);
 
         Cookie sortDirCookie = new Cookie("sortDir", sortDir);
@@ -63,7 +61,6 @@ public class InformationController {
         sortDirCookie.setPath("/information");
         response.addCookie(sortDirCookie);
 
-        // 3. Przekazanie danych do serwisu i modelu (dodajemy parametry do widoku, aby szablony HTML wiedziały jak budować linki)
         model.addAttribute("information", informationService.getInformationsForUser(user, sortBy, sortDir, categoryId, date));
         model.addAttribute("sharedWithMe", informationService.getSharedWithUser(user));
         model.addAttribute("categories", categoryService.getCategoriesForUser(user));
@@ -102,22 +99,6 @@ public class InformationController {
             @AuthenticationPrincipal User user,
             Model model) {
 
-        if ("addCategory".equals(action)) {
-            if (newCategoryName != null && !newCategoryName.trim().isEmpty()) {
-                try {
-                    categoryService.createCategory(newCategoryName, user);
-                } catch (RuntimeException e) {
-                    model.addAttribute("categoryError", e.getMessage());
-                }
-            }
-
-            model.addAttribute("draftTitle", title);
-            model.addAttribute("draftContent", content);
-            model.addAttribute("categories", categoryService.getCategoriesForUser(user));
-            model.addAttribute("information", information);
-            return "information/add";
-        }
-
         Category category = null;
         if (categoryId != null) {
             category = new Category();
@@ -141,7 +122,7 @@ public class InformationController {
                            @AuthenticationPrincipal User user) {
         model.addAttribute("information", informationService.getInformationById(id, user));
         model.addAttribute("categories", categoryService.getCategoriesForUser(user));
-        return "information/edit"; // was informations/edit
+        return "information/edit";
     }
 
     @PostMapping("/edit/{id}")
@@ -165,7 +146,7 @@ public class InformationController {
     public String deleteInformation(@PathVariable Long id,
                                     @AuthenticationPrincipal User user) {
         informationService.deleteInformation(id, user);
-        return "redirect:/information"; // was /informations
+        return "redirect:/information";
     }
 
     @GetMapping("/sharelink/{id}")
