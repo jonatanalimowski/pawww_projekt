@@ -3,9 +3,13 @@ package com.example.projekt.model;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
 
 @Entity
-@Table(name = "categories")
+@Table(name = "categories", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"name", "user_id"})
+})
+
 @Data
 @NoArgsConstructor
 public class Category {

@@ -20,6 +20,10 @@ public class CategoryService {
     }
 
     public void createCategory(String name, User user) {
+        if (categoryRepository.findByNameAndOwner(name, user).isPresent()) {
+            throw new RuntimeException("Taka kategoria już istnieje!");
+        }
+
         Category category = new Category();
         category.setName(name);
         category.setOwner(user);

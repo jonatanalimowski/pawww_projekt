@@ -58,3 +58,9 @@ SELECT * FROM shared_information s_i
 WHERE s_i.recipient_id = 3;
 SELECT * FROM uzytkownik;
 RESET ROLE;
+
+select * from uzytkownik;
+select * from categories;
+delete from categories where id = 3;
+select * from information;
+delete from information where id = 10;

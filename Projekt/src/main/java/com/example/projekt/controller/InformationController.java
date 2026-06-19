@@ -5,7 +5,9 @@ import com.example.projekt.model.Information;
 import com.example.projekt.model.User;
 import com.example.projekt.service.CategoryService;
 import com.example.projekt.service.InformationService;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -36,22 +38,30 @@ public class InformationController {
                                   @RequestParam(required = false) String sortDir,
                                   @RequestParam(required = false) Long categoryId,
                                   @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
-                                  HttpSession session) {
+                                  @CookieValue(value = "sortBy", defaultValue = "addedDate") String cookieSortBy,
+                                  @CookieValue(value = "sortDir", defaultValue = "desc") String cookieSortDir,
+                                  HttpServletResponse response) {
 
+        // 1. Jeśli parametry w URL są puste, pobierz wartości z ciasteczek
         if (sortBy == null) {
-            sortBy = (String) session.getAttribute("sortBy");
+            sortBy = cookieSortBy;
         }
         if (sortDir == null) {
-            sortDir = (String) session.getAttribute("sortDir");
+            sortDir = cookieSortDir;
         }
 
+        // 2. Zapisz aktualne preferencje z powrotem do ciasteczek, aby przetrwały restart przeglądarki
+        Cookie sortByCookie = new Cookie("sortBy", sortBy);
+        sortByCookie.setMaxAge(7 * 24 * 60 * 60); // Ciasteczko ważne przez 7 dni
+        sortByCookie.setPath("/information");      // Dostępne tylko dla tej ścieżki
+        response.addCookie(sortByCookie);
 
-        if (sortBy == null) sortBy = "addedDate";
-        if (sortDir == null) sortDir = "desc";
+        Cookie sortDirCookie = new Cookie("sortDir", sortDir);
+        sortDirCookie.setMaxAge(7 * 24 * 60 * 60);
+        sortDirCookie.setPath("/information");
+        response.addCookie(sortDirCookie);
 
-        session.setAttribute("sortBy", sortBy);
-        session.setAttribute("sortDir", sortDir);
-
+        // 3. Przekazanie danych do serwisu i modelu (dodajemy parametry do widoku, aby szablony HTML wiedziały jak budować linki)
         model.addAttribute("information", informationService.getInformationsForUser(user, sortBy, sortDir, categoryId, date));
         model.addAttribute("sharedWithMe", informationService.getSharedWithUser(user));
         model.addAttribute("categories", categoryService.getCategoriesForUser(user));
@@ -90,7 +100,11 @@ public class InformationController {
 
         if ("addCategory".equals(action)) {
             if (newCategoryName != null && !newCategoryName.trim().isEmpty()) {
-                categoryService.createCategory(newCategoryName, user);
+                try {
+                    categoryService.createCategory(newCategoryName, user);
+                } catch (RuntimeException e) {
+                    model.addAttribute("categoryError", e.getMessage());
+                }
             }
 
             model.addAttribute("draftTitle", title);
